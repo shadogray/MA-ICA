@@ -1,0 +1,243 @@
+---
+title: "MA-Prototype-Report-2"
+subtitle:  "2 Base Signals"
+author: "Thomas Frühbeck"
+date: "17 6 2019"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    fig_width: 4
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+    fig_width: 4
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# TLDR
+## Comparison of Rewards by ICA Signals from 2 Base Signals
+
+![](v6sig2/S_density_ica_2_2_Reward.png){width=24%}![](v6sig2/S_density_ica_3_2_Reward.png){width=24%}![](v6sig2/S_density_ica_4_2_Reward.png){width=24%}
+```{r}
+#-![](v6sig2/S_density_ica_5_2_Reward.png){width=24%}
+```
+
+# Implementation Prototype
+
+## Design 
+
+Basic Pricipal: Reinforcement Learning - Episodic Semi-gradient Sarsa for Estimating Q.hat ~ Q
+
+- **2 Base TimeSeries**
+- Target Series a Sum of Base TimeSeries
+- Artificial TimeSeries generates from Base Series 
+- Application of ICA, number of Signals provided
+- State S a combination of
+  - State-per-Signal: Si
+  - State of Target: P
+- State-Weights W (see Basic Pricipal)
+- Actions:
+  - {-1,0,+1} per Signal in State-Increments
+
+- Reward Predicted
+  - calculated by following the predicted Value of State
+    Value of State at time t+1: State * Predicted-Price(t+1) 
+    Cost of action at time t: State-Difference * Price(t)
+    
+    R.hat = sum(Si(t+1)) * (p.hat(t+1)-p(t)) - sum(Si(t+1)-Si(t)) * p(t)
+    
+- Target Reward - Reference Policy
+  - uses known Price at time after Action t <- t+1
+
+    R = sum(Si(t)) * (p(t)-p(t-1)) - sum(Si(t)-Si(t-1)) * p(t-1)
+
+Environment - Definitions
+- TimeSeries Steps: 20
+- Value-Intervals: 10+1
+- Learning-Rate alpha: 0.1
+- Discounging gamma: 0.9
+- Exploration probability epsilon: 0.2
+
+## 2 ICA Signals of 2 Original - Matching Real Signal Number
+
+### Current Results
+
+#### Numeric Results
+
+- Type: SARSA 
+- Iterations: 5570 
+- FinalR: 0 
+- SumR: -43.398092497428 
+- W: 0.455893387289827, 0.542092896747414"
+
+### Initial State
+
+#### Original Signals and Artificial TimeSeries
+
+![](v6sig2/S_density_ica_2_2_BaseSignals.png){ width=33% } ![](v6sig2/S_density_ica_2_2_ArtificialSeries.png){ width=33% } ![](v6sig2/S_density_ica_2_2_RawSignals.png){ width=33% }
+
+#### Target Signal and Price-Weighted ICA Signals
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_2_2_Signals.png")
+```
+
+### Evaluation Result - State Track and Rewards
+
+#### State Track
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_2_2_StateTrack.png")
+```
+
+#### Reward
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_2_2_Reward.png")
+```
+
+#### State Evaluation Density
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_2_2_1.png")
+```
+
+## 3 ICA Signals of 2 Original
+
+### Current Results
+
+#### Numeric Results
+
+- Type: SARSA 
+- Iterations: 11620 
+- FinalR: 4.59810696305418 
+- SumR: 55.6007175640732 
+- W: 0.233748001222717, 0.481174317960734, 0.282107292120974"
+
+### Initial State
+
+#### Original Signals and Artificial TimeSeries
+
+![](v6sig2/S_density_ica_3_2_BaseSignals.png){ width=33% } ![](v6sig2/S_density_ica_3_2_ArtificialSeries.png){ width=33% } ![](v6sig2/S_density_ica_3_2_RawSignals.png){ width=33% }
+
+#### Target Signal and Price-Weighted ICA Signals
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_3_2_Signals.png")
+```
+
+### Evaluation Result - State Track and Rewards
+
+#### State Track
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_3_2_StateTrack.png")
+```
+
+#### Reward
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_3_2_Reward.png")
+```
+
+#### State Evaluation Density
+![](v6sig2/S_density_ica_3_2_1.png){ width=50% } ![](v6sig2/S_density_ica_3_2_2.png){ width=50% }
+
+![](v6sig2/S_density_ica_3_2_3.png){ width=50% }
+
+## 4 ICA Signals of 2 Original
+
+### Current Results
+
+#### Numeric Results
+
+- Type: SARSA 
+- Iterations: 3230 
+- FinalR: 4.67603676645306 
+- SumR: -26.399243316211 
+- W: 0.202098726264003, 0.339778877012673, 0.257348936466594, 0.196766437698534"
+
+### Initial State
+
+#### Original Signals and Artificial TimeSeries
+
+![](v6sig2/S_density_ica_4_2_BaseSignals.png){ width=33% } ![](v6sig2/S_density_ica_4_2_ArtificialSeries.png){ width=33% } ![](v6sig2/S_density_ica_4_2_RawSignals.png){ width=33% }
+
+#### Target Signal and Price-Weighted ICA Signals
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_4_2_Signals.png")
+```
+
+### Evaluation Result - State Track and Rewards
+
+#### State Track
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_4_2_StateTrack.png")
+```
+
+#### Reward
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+knitr::include_graphics("v6sig2/S_density_ica_4_2_Reward.png")
+```
+
+#### State Evaluation Density
+![](v6sig2/S_density_ica_4_2_1.png){ width=50% } ![](v6sig2/S_density_ica_4_2_2.png){ width=50% }
+
+![](v6sig2/S_density_ica_4_2_3.png){ width=50% } ![](v6sig2/S_density_ica_4_2_4.png){ width=50% }
+
+## 5 ICA Signals of 2 Original
+
+### Current Results
+
+#### Numeric Results
+
+- Type: SARSA 
+- Iterations: 510 
+- FinalR: 2.38311231117406 
+- SumR: -50.8341619072663 
+- W: 0.319990454197219, 0.262159881713067, 0.19689291445635, 0.129541896123008, 0.0864381499508371"
+
+### Initial State
+
+#### Original Signals and Artificial TimeSeries
+
+```{r}
+#![](v6sig2/S_density_ica_5_2_BaseSignals.png){ width=33% } #![](v6sig2/S_density_ica_5_2_ArtificialSeries.png){ width=33% } #![](v6sig2/S_density_ica_5_2_RawSignals.png){ width=33% }
+```
+
+#### Target Signal and Price-Weighted ICA Signals
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+#knitr::include_graphics("v6sig2/S_density_ica_5_2_Signals.png")
+```
+
+### Evaluation Result - State Track and Rewards
+
+#### State Track
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+#knitr::include_graphics("v6sig2/S_density_ica_5_2_StateTrack.png")
+```
+
+#### Reward
+
+```{r, fig.align='center', out.width = "280px", echo=F}
+#knitr::include_graphics("v6sig2/S_density_ica_5_2_Reward.png")
+```
+
+#### State Evaluation Density
+```{r}
+#![](v6sig2/S_density_ica_5_2_1.png){ width=50% } ![](v6sig2/S_density_ica_5_2_2.png){ width=50% }
+
+#![](v6sig2/S_density_ica_5_2_3.png){ width=50% } ![](v6sig2/S_density_ica_5_2_4.png){ width=50% }
+
+#![](v6sig2/S_density_ica_5_2_5.png){ width=50% } ![](v6sig2/S_density_ica_5_2_6.png){ width=50% }
+```
+

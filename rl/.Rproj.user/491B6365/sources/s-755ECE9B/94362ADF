@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580220088821.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "94362ADF",
+    "lastKnownWriteTime" : 1579978181,
+    "last_content_update" : 1579978181,
+    "path" : "/win/thomas/gdrive/FH/rl/findWayFinLearn2.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "623,16",
+        "scrollLine" : "613"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,1 @@
+{"size":24,"offset":0,"sortField":"fundnetassets","sortType":"DESC","quoteType":"ETF","query":{"operator":"or","operands":[{"operator":"EQ","operands":["categoryname","Global Real Estate"]},{"operator":"EQ","operands":["categoryname","Europe Stock"]}]},"userId":"","userIdType":"guid"}
